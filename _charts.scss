@@ -1,0 +1,15 @@
+.chart-cards-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+.pie-chart {
+  height: 400px !important;
+}
+
+@media (max-width: 1024px) {
+  .chart-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
