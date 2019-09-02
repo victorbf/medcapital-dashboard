@@ -26,34 +26,66 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
     />
     <link rel="stylesheet" href="./style.css" />
 
     <title>MedCapital</title>
   </head>
   <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header>
-        abretudo
-      </header>
-      <main class="mdl-layout__content">
-        <div class="container-fluid">
-          <div id="financiasTotal" class="card-deck-3"></div>
+    <header class="navbar">
+      <div>dashboard</div>
+    </header>
+    <main class="mt-5">
+      <div class="container-fluid">
+        <div id="totalFinancias" class="card-deck-3"></div>
+        <div class="chart-cards-grid mt-4">
           <div class="card-base">
-            <div class="d-flex justify-content-between">
-              <div class="text-center">Vïnculo</div>
-              <div class="text-center">Fonte</div>
-              <div class="text-center">Tipo/Fonte</div>
-              <div class="text-center">Rendimento Bruto</div>
-              <div class="text-center">Impostos Pagos</div>
-              <div class="text-center">Alíquota Média</div>
-            </div>
-            <div id="tableData"></div>
+            <canvas id="geral" class="pie-chart"></canvas>
+          </div>
+          <div class="card-base">
+            <canvas id="geral" class="pie-chart" width="50" height="50"></canvas>
           </div>
         </div>
-      </main>
-    </div>
+        <div class="card-deck-1 mt-4">
+          <div class="card-base">
+            <div class="table">
+              <div class="table-header">
+                <div class="table-header-cell">Vïnculo</div>
+                <div class="table-header-cell">Fonte</div>
+                <div class="table-header-cell">Tipo/Fonte</div>
+                <div class="table-header-cell">Rendimento Bruto</div>
+                <div class="table-header-cell">Impostos Pagos</div>
+                <div class="table-header-cell">Alíquota Média</div>
+              </div>
+              <div class="table-content" id="dadosDaTabela"></div>
+              <div class="card-footer">
+                <button type="button" onclick="manejarModal()">
+                  Ver todos
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal d-none" id="modal">
+        <div class="d-flex justify-content-betweeen">
+          <h5 class="modal-title">Todos pagamentos</h5>
+          <button type="button" onclick="manejarModal()"></button>
+        </div>
+        <div class="table">
+          <div class="table-header">
+            <div class="table-header-cell">Vïnculo</div>
+            <div class="table-header-cell">Fonte</div>
+            <div class="table-header-cell">Tipo/Fonte</div>
+            <div class="table-header-cell">Rendimento Bruto</div>
+            <div class="table-header-cell">Impostos Pagos</div>
+            <div class="table-header-cell">Alíquota Média</div>
+          </div>
+          <div class="table-content" id="dadosDaTabelaModal"></div>
+        </div>
+      </div>
+    </main>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -65,7 +97,8 @@
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
@@ -74,16 +107,69 @@
     <script src="./consts.js"></script>
 
     <script>
-      financias_total.forEach(financiaTotal => {
+      // Função para esconder e mostrar modal
+      function manejarModal() {
+        if ($("#modal").hasClass("d-block")) {
+          $("#modal").addClass("d-none");
+          $("#modal").removeClass("d-block");
+        } else {
+          $("#modal").addClass("d-block");
+          $("#modal").removeClass("d-none");
+        }
+      }
+
+      // Tratamento do array para pegar apenas os 5 ultimos valores.
+      const ultimas_5_financias = financias.slice(Math.max(financias.length - 5, 1));
+
+      financias_total.forEach(function(financiaTotal) {
         const total = financiaTotal.total.toString();
         const numeroFormatado = total.replace(".", ",");
         const card = `<div class="card-base"><h5 class="card-title text-center">${financiaTotal.nome}</h5><div class="d-flex justify-content-center"><p class="h1 font-weight-bold">${numeroFormatado}</p></div></div>`;
-        $("#financiasTotal").append(card);
+        $("#totalFinancias").append(card);
       });
 
-      financias.forEach(financia => {
-        const tableData = `<div class="d-flex justify-content-between"><div>${financia.vinculo.nome}</div><div>${financia.fonte.nome}</div><div>${financia.tipo_fonte.nome}</div><div>${financia.rendimento_bruto}</div><div>${financia.impostos_pagos}</div><div>${financia.aliquota_media}</div></div>`;
-        $("#tableData").append(tableData);
+      ultimas_5_financias.forEach(function(financia) {
+        const dadosDaTabela = `<div class="table-row"><div class="table-row-cell">${financia.vinculo.nome}</div><div class="table-row-cell">${financia.fonte.nome}</div><div class="table-row-cell">${financia.tipo_fonte.nome}</div><div class="table-row-cell">${financia.rendimento_bruto}</div><div class="table-row-cell">${financia.impostos_pagos}</div><div class="table-row-cell">${financia.aliquota_media}</div></div>`;
+        $("#dadosDaTabela").append(dadosDaTabela);
+      });
+
+      financias.forEach(function(financia) {
+        const dadosDaTabela = `<div class="table-row"><div class="table-row-cell">${financia.vinculo.nome}</div><div class="table-row-cell">${financia.fonte.nome}</div><div class="table-row-cell">${financia.tipo_fonte.nome}</div><div class="table-row-cell">${financia.rendimento_bruto}</div><div class="table-row-cell">${financia.impostos_pagos}</div><div class="table-row-cell">${financia.aliquota_media}</div></div>`;
+        $("#dadosDaTabelaModal").append(dadosDaTabela);
+      });
+    </script>
+    <script>
+      // Gráficos
+      var total_despesas = 0;
+      despesas.forEach(function(despesa) {
+        total_despesas += despesa.valor;
+      });
+      const pieChartLabels = ["Despesas", "Impostos", "Lucro"];
+      const ctx = $("#geral");
+      const rendimentoBruto = financias_total[0].total;
+      const impostosPagos = financias_total[1].total;
+      var lucro = rendimentoBruto - (total_despesas + impostosPagos);
+      const backgroundColor = ["#d6ac30", "#dc3545", "#218EC6"];
+
+      var geral = new Chart(ctx, {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: [total_despesas, financias_total[1].total, lucro],
+              backgroundColor: backgroundColor
+            }
+          ],
+          labels: pieChartLabels,
+          options: {
+            legend: {
+              display: true,
+              labels: {
+                fontColor: "rgb(255, 99, 132)"
+              }
+            }
+          }
+        }
       });
     </script>
   </body>
