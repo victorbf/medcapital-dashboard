@@ -34,22 +34,38 @@
   </head>
   <body>
     <header class="navbar">
-      <div>dashboard</div>
+      <h5>dashboard</h5>
     </header>
     <main class="mt-5">
       <div class="container-fluid">
         <div id="totalFinancias" class="card-deck-3"></div>
         <div class="chart-cards-grid mt-4">
           <div class="card-base">
-            <canvas id="geral" class="pie-chart"></canvas>
+            <div class="card-header">
+              <h5 class="card-title">Resumo do mês</h5>
+            </div>
+            <div class="card-content">
+              <canvas id="geral" class="pie-chart"></canvas>
+            </div>
           </div>
           <div class="card-base">
-            <canvas id="geral" class="pie-chart" width="50" height="50"></canvas>
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title">Impostos</h5>
+              <div class="status" id="status"></div>
+            </div>
+            <div class="card-content">
+              <canvas id="impostos" class="chart" width="50" height="50"></canvas>
+            </div>
           </div>
         </div>
         <div class="card-deck-1 mt-4">
           <div class="card-base">
-            <div class="overflow-y-scroll">
+            <div class="card-header">
+              <h5 class="card-title">
+                Últimos 5 pagamentos
+              </h5>
+            </div>
+            <div class="overflow-y-scroll mt-3">
               <div class="table" role="grid">
                 <div class="table-header">
                   <div class="table-header-cell">Vïnculo</div>
@@ -70,22 +86,27 @@
           </div>
         </div>
       </div>
-      <div class="modal d-none" id="modal">
-        <div class="d-flex justify-content-betweeen">
-          <h5 class="modal-title">Todos pagamentos</h5>
-          <button type="button" class="button" onclick="manejarModal()"></button>
-        </div>
-        <div class="overflow-y-scroll">
-          <div class="table">
-            <div class="table-header">
-              <div class="table-header-cell">Vïnculo</div>
-              <div class="table-header-cell">Fonte</div>
-              <div class="table-header-cell">Tipo/Fonte</div>
-              <div class="table-header-cell">Rendimento Bruto</div>
-              <div class="table-header-cell">Impostos Pagos</div>
-              <div class="table-header-cell">Alíquota Média</div>
+      <div class="d-none modal" id="modal">
+        <div class="background-modal"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Todos pagamentos</h5>
+            <button type="button" class="modal-close-button" onclick="manejarModal()">
+              X
+            </button>
+          </div>
+          <div class="overflow-y-scroll">
+            <div class="table">
+              <div class="table-header">
+                <div class="table-header-cell">Vïnculo</div>
+                <div class="table-header-cell">Fonte</div>
+                <div class="table-header-cell">Tipo/Fonte</div>
+                <div class="table-header-cell">Rendimento Bruto</div>
+                <div class="table-header-cell">Impostos Pagos</div>
+                <div class="table-header-cell">Alíquota Média</div>
+              </div>
+              <div class="table-content" id="dadosDaTabelaModal"></div>
             </div>
-            <div class="table-content" id="dadosDaTabelaModal"></div>
           </div>
         </div>
       </div>
@@ -117,8 +138,8 @@
           $("#modal").addClass("d-none");
           $("#modal").removeClass("d-block");
         } else {
-          $("#modal").addClass("d-block");
           $("#modal").removeClass("d-none");
+          $("#modal").addClass("d-block");
         }
       }
 
@@ -128,7 +149,7 @@
       financias_total.forEach(function(financiaTotal) {
         const total = financiaTotal.total.toString();
         const numeroFormatado = total.replace(".", ",");
-        const card = `<div class="card-base"><h5 class="card-title text-center">${financiaTotal.nome}</h5><div class="d-flex justify-content-center"><p class="h1 font-weight-bold">${numeroFormatado}</p></div></div>`;
+        const card = `<div class="card-base"><div class="card-header"><h5 class="card-title text-center">${financiaTotal.nome}</h5></div><div class="d-flex justify-content-center card-content"><p class="h1 font-weight-bold">${numeroFormatado}</p></div></div>`;
         $("#totalFinancias").append(card);
       });
 
@@ -141,6 +162,9 @@
         const dadosDaTabela = `<div class="table-row"><div class="table-row-cell">${financia.vinculo.nome}</div><div class="table-row-cell">${financia.fonte.nome}</div><div class="table-row-cell">${financia.tipo_fonte.nome}</div><div class="table-row-cell">${financia.rendimento_bruto}</div><div class="table-row-cell">${financia.impostos_pagos}</div><div class="table-row-cell">${financia.aliquota_media}</div></div>`;
         $("#dadosDaTabelaModal").append(dadosDaTabela);
       });
+
+      const htmlStatus = `<p class="m-0" style="color: ${status.cor}">${status.nome}</p>`;
+      $("#status").append(htmlStatus);
     </script>
     <script>
       // Gráficos
@@ -149,19 +173,50 @@
         total_despesas += despesa.valor;
       });
       const pieChartLabels = ["Despesas", "Impostos", "Lucro"];
-      const ctx = $("#geral");
+      const graficoGeral = $("#geral");
+      const graficoImpostos = $("#impostos");
       const rendimentoBruto = financias_total[0].total;
       const impostosPagos = financias_total[1].total;
-      var lucro = rendimentoBruto - (total_despesas + impostosPagos);
-      const backgroundColor = ["#FD841B", "#D42333", "#0b6DAE"];
+      const backgroundColorGeral = ["#FD841B", "#D42333", "#0b6DAE"];
+      const backgroundColorImpostos = ["#D42333", "#03af56", "#0b6DAE"];
+      const dadosImpostos = impostos.map(imposto => imposto.valor);
+      const labelsImpostos = impostos.map(imposto => imposto.nome);
 
-      var geral = new Chart(ctx, {
+      Chart.defaults.global.defaultFontColor = "#fff";
+
+      var lucro = rendimentoBruto - (total_despesas + impostosPagos);
+
+      var imposto = new Chart(graficoImpostos, {
+        type: "bar",
+        data: {
+          labels: labelsImpostos,
+          datasets: [
+            {
+              label: "Impostos",
+              data: dadosImpostos,
+              backgroundColor: backgroundColorImpostos
+            }
+          ]
+        },
+        options: {
+          tooltips: {
+            labelColor: "#fff"
+          },
+          legend: {
+            labels: {
+              fontColor: "#FFF"
+            }
+          }
+        }
+      });
+
+      var geral = new Chart(graficoGeral, {
         type: "pie",
         data: {
           datasets: [
             {
               data: [total_despesas, financias_total[1].total, lucro],
-              backgroundColor: backgroundColor
+              backgroundColor: backgroundColorGeral
             }
           ],
           labels: pieChartLabels
@@ -171,7 +226,7 @@
             position: "bottom",
             labels: {
               fontColor: "#FFF",
-              fontSize: 18
+              fontSize: 16
             }
           }
         }

@@ -41,9 +41,28 @@ const despesas = [
   }
 ];
 
+const impostos = [
+  {
+    id: 1,
+    nome: "Impostos devidos",
+    valor: 21773.61
+  },
+  {
+    id: 2,
+    nome: "Impostos pagos",
+    valor: 9754.57
+  },
+  {
+    id: 3,
+    nome: "Saldo Imposto",
+    valor: 12019.04
+  }
+];
+
 const status = {
   id: 1,
-  nome: "À PAGAR"
+  nome: "À PAGAR",
+  cor: "#d42333"
 };
 
 const financias = [

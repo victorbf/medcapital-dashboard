@@ -9,6 +9,10 @@ body {
   overflow-y: scroll;
 }
 
+.status p {
+  font-weight: 800;
+}
+
 .card-deck-1 {
   display: grid;
   grid-gap: 1rem;
@@ -36,6 +40,7 @@ body {
 .card-header {
   background: #3d4b5e;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  padding: 1rem;
 }
 
 .card-title {
@@ -43,15 +48,20 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 1rem;
+  margin: 0;
+}
+
+.card-content {
+  padding: 1rem;
 }
 
 .card-base {
+  border-radius: 3px;
   min-height: 100px;
   min-width: 200px;
   box-sizing: border-box;
   position: relative;
   font-size: 16px;
-  padding: 1rem;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   background-color: #485b77;
 }
@@ -123,6 +133,44 @@ body {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   background: #485b77;
 }
+.navbar h5 {
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.background-modal {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(48, 48, 48, 0.7);
+  z-index: 100;
+}
+
+.modal-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(100% - 50px);
+  height: calc(100% - 100px);
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 200;
+  background-color: #485b77;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.modal-close-button {
+  border: none;
+  color: #fff;
+  background: #374355;
+  border-radius: 3px;
+}
 
 .chart-cards-grid {
   display: grid;
@@ -130,8 +178,8 @@ body {
   grid-template-columns: 2fr 1fr;
 }
 
-.pie-chart {
-  height: 400px !important;
+.chart {
+  color: #fff;
 }
 
 @media (max-width: 1024px) {
