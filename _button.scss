@@ -1,0 +1,17 @@
+.button {
+  padding: 0.6rem 1rem;
+  background: $dark-blue-neutral;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+
+  &:hover {
+    background: $dark-blue-darker;
+  }
+}
+
+@media (max-width: 480px) {
+  .button {
+    width: 100%;
+  }
+}
