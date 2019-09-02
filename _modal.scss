@@ -1,0 +1,32 @@
+.background-modal {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(48, 48, 48, 0.7);
+  z-index: 100;
+}
+
+.modal-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(100% - 50px);
+  height: calc(100% - 100px);
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 200;
+  background-color: $dark-blue-light;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.modal-close-button {
+  border: none;
+  color: #fff;
+  background: $dark-blue-darker;
+  border-radius: 3px;
+}

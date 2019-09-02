@@ -1,0 +1,21 @@
+.button {
+  padding: 0.6rem 1rem;
+  background: $dark-blue-neutral;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+
+  &:hover {
+    background: $dark-blue-darker;
+  }
+
+  + .--is-fixed {
+    position: fixed;
+  }
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+  }
+}
