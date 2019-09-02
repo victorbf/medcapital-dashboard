@@ -149,7 +149,7 @@
       const rendimentoBruto = financias_total[0].total;
       const impostosPagos = financias_total[1].total;
       var lucro = rendimentoBruto - (total_despesas + impostosPagos);
-      const backgroundColor = ["#d6ac30", "#dc3545", "#218EC6"];
+      const backgroundColor = ["#FD841B", "#D42333", "#0b6DAE"];
 
       var geral = new Chart(ctx, {
         type: "pie",
@@ -160,13 +160,14 @@
               backgroundColor: backgroundColor
             }
           ],
-          labels: pieChartLabels,
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                fontColor: "rgb(255, 99, 132)"
-              }
+          labels: pieChartLabels
+        },
+        options: {
+          legend: {
+            position: "bottom",
+            labels: {
+              fontColor: "#FFF",
+              fontSize: 18
             }
           }
         }

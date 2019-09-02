@@ -2,6 +2,7 @@ body {
   font-family: "Open Sans", sans-serif;
   height: 100%;
   background: #374355;
+  color: #fff;
 }
 
 .card-deck-1 {
@@ -66,21 +67,26 @@ body {
 .table-cell-base, .table-content .table-row-cell, .table-header-cell {
   flex: 100 0 auto;
   width: 100px;
+  border-right: 1px solid #818285;
+  padding: 1rem;
+}
+.table-cell-base:first-child, .table-content .table-row-cell:first-child, .table-header-cell:first-child {
+  border-left: 1px solid #818285;
 }
 
-.table-header {
+.table-base, .table-content .table-row, .table-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #818285;
+  border-top: 1px solid #818285;
+}
+
+.table {
+  color: #fff;
 }
 .table-header-cell {
   text-align: center;
-}
-
-.table-content .table-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 .navbar {
   height: 80px;
