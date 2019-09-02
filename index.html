@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+
+    <title>MedCapital</title>
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header>
+        abretudo
+      </header>
+      <main class="mdl-layout__content">
+        <div class="container-fluid">
+          <div id="financiasTotal" class="card-deck-3"></div>
+          <div class="card-base">
+            <div class="d-flex justify-content-between">
+              <div class="text-center">Vïnculo</div>
+              <div class="text-center">Fonte</div>
+              <div class="text-center">Tipo/Fonte</div>
+              <div class="text-center">Rendimento Bruto</div>
+              <div class="text-center">Impostos Pagos</div>
+              <div class="text-center">Alíquota Média</div>
+            </div>
+            <div id="tableData"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./consts.js"></script>
+
+    <script>
+      financias_total.forEach(financiaTotal => {
+        const total = financiaTotal.total.toString();
+        const numeroFormatado = total.replace(".", ",");
+        const card = `<div class="card-base"><h5 class="card-title text-center">${financiaTotal.nome}</h5><div class="d-flex justify-content-center"><p class="h1 font-weight-bold">${numeroFormatado}</p></div></div>`;
+        $("#financiasTotal").append(card);
+      });
+
+      financias.forEach(financia => {
+        const tableData = `<div class="d-flex justify-content-between"><div>${financia.vinculo.nome}</div><div>${financia.fonte.nome}</div><div>${financia.tipo_fonte.nome}</div><div>${financia.rendimento_bruto}</div><div>${financia.impostos_pagos}</div><div>${financia.aliquota_media}</div></div>`;
+        $("#tableData").append(tableData);
+      });
+    </script>
+  </body>
+</html>
