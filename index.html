@@ -49,21 +49,23 @@
         </div>
         <div class="card-deck-1 mt-4">
           <div class="card-base">
-            <div class="table">
-              <div class="table-header">
-                <div class="table-header-cell">Vïnculo</div>
-                <div class="table-header-cell">Fonte</div>
-                <div class="table-header-cell">Tipo/Fonte</div>
-                <div class="table-header-cell">Rendimento Bruto</div>
-                <div class="table-header-cell">Impostos Pagos</div>
-                <div class="table-header-cell">Alíquota Média</div>
+            <div class="overflow-y-scroll">
+              <div class="table" role="grid">
+                <div class="table-header">
+                  <div class="table-header-cell">Vïnculo</div>
+                  <div class="table-header-cell">Fonte</div>
+                  <div class="table-header-cell">Tipo/Fonte</div>
+                  <div class="table-header-cell">Rendimento Bruto</div>
+                  <div class="table-header-cell">Impostos Pagos</div>
+                  <div class="table-header-cell">Alíquota Média</div>
+                </div>
+                <div class="table-content" id="dadosDaTabela"></div>
               </div>
-              <div class="table-content" id="dadosDaTabela"></div>
-              <div class="card-footer d-flex justify-content-end">
-                <button class="button" type="button" onclick="manejarModal()">
-                  Ver todos
-                </button>
-              </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+              <button class="button" type="button" onclick="manejarModal()">
+                Ver todos
+              </button>
             </div>
           </div>
         </div>
@@ -73,16 +75,18 @@
           <h5 class="modal-title">Todos pagamentos</h5>
           <button type="button" class="button" onclick="manejarModal()"></button>
         </div>
-        <div class="table">
-          <div class="table-header">
-            <div class="table-header-cell">Vïnculo</div>
-            <div class="table-header-cell">Fonte</div>
-            <div class="table-header-cell">Tipo/Fonte</div>
-            <div class="table-header-cell">Rendimento Bruto</div>
-            <div class="table-header-cell">Impostos Pagos</div>
-            <div class="table-header-cell">Alíquota Média</div>
+        <div class="overflow-y-scroll">
+          <div class="table">
+            <div class="table-header">
+              <div class="table-header-cell">Vïnculo</div>
+              <div class="table-header-cell">Fonte</div>
+              <div class="table-header-cell">Tipo/Fonte</div>
+              <div class="table-header-cell">Rendimento Bruto</div>
+              <div class="table-header-cell">Impostos Pagos</div>
+              <div class="table-header-cell">Alíquota Média</div>
+            </div>
+            <div class="table-content" id="dadosDaTabelaModal"></div>
           </div>
-          <div class="table-content" id="dadosDaTabelaModal"></div>
         </div>
       </div>
     </main>

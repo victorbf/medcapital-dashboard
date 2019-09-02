@@ -8,9 +8,13 @@
   &:hover {
     background: $dark-blue-darker;
   }
+
+  + .--is-fixed {
+    position: fixed;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .button {
     width: 100%;
   }

@@ -12,16 +12,26 @@ $table-color: $dark-blue-neutral;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid $table-color;
-  border-top: 1px solid $table-color;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+
+  &:nth-child(odd) {
+    background-color: $dark-blue-neutral;
+  }
 }
 
 .table {
   color: #fff;
+
+  &::-webkit-scrollbar:horizontal {
+    width: 11px;
+  }
+
   &-header {
     font-weight: 600;
     font-size: 16px;
     @extend .table-base;
+    background-color: $dark-blue-darker !important;
 
     &-cell {
       @extend .table-cell-base;
@@ -38,5 +48,14 @@ $table-color: $dark-blue-neutral;
         @extend .table-cell-base;
       }
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .table {
+    width: 1200px;
+  }
+  .table-cell-base {
+    width: 200px;
   }
 }

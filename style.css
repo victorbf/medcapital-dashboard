@@ -5,6 +5,10 @@ body {
   color: #fff;
 }
 
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 .card-deck-1 {
   display: grid;
   grid-gap: 1rem;
@@ -81,22 +85,38 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #3d4b5e;
-  border-top: 1px solid #3d4b5e;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+.table-base:nth-child(odd), .table-content .table-row:nth-child(odd), .table-header:nth-child(odd) {
+  background-color: #3d4b5e;
 }
 
 .table {
   color: #fff;
 }
+.table::-webkit-scrollbar:horizontal {
+  width: 11px;
+}
 .table-header {
   font-weight: 600;
   font-size: 16px;
+  background-color: #374355 !important;
 }
 .table-header-cell {
   text-align: center;
 }
 .table-content .table-row {
   font-size: 14px;
+}
+@media (max-width: 1024px) {
+  .table {
+    width: 1200px;
+  }
+
+  .table-cell-base, .table-header-cell, .table-content .table-row-cell {
+    width: 200px;
+  }
 }
 .navbar {
   height: 80px;
@@ -118,6 +138,10 @@ body {
   .chart-cards-grid {
     grid-template-columns: 1fr;
   }
+
+  .pie-chart {
+    height: 100% !important;
+  }
 }
 .button {
   padding: 0.6rem 1rem;
@@ -129,8 +153,11 @@ body {
 .button:hover {
   background: #374355;
 }
+.button + .--is-fixed {
+  position: fixed;
+}
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .button {
     width: 100%;
   }
